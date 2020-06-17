@@ -25,7 +25,7 @@ public class Config implements ModMenuApi {
     }
 
     public static boolean getBool(int line){
-        if(configFile.exists()) return false;
+        if(!configFile.exists()) return false;
         else {
             try {
                 boolean val = Boolean.parseBoolean(Files.readAllLines(Paths.get(configFile.getPath())).get(line));
