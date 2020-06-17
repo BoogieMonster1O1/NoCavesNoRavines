@@ -12,9 +12,6 @@ import net.minecraft.client.gui.screen.Screen;
 
 @Environment(EnvType.CLIENT)
 public class Config implements ModMenuApi {
-    ConfigBuilder builder = ConfigBuilder.create().setParentScreen(MinecraftClient.getInstance().currentScreen).setTitle("config.nocavesnoravines.title");
-    ConfigCategory main = builder.getOrCreateCategory("config.nocavesnoravines.category");
-    ConfigEntryBuilder entryBuilder = builder.entryBuilder();
 
     @Override
     public String getModId() {
@@ -29,6 +26,10 @@ public class Config implements ModMenuApi {
     public static boolean disableLavaLakes = true;
 
     public Screen getScreen(Screen a){
+        ConfigBuilder builder = ConfigBuilder.create().setParentScreen(MinecraftClient.getInstance().currentScreen).setTitle("config.nocavesnoravines.title");
+        ConfigCategory main = builder.getOrCreateCategory("config.nocavesnoravines.category");
+        ConfigEntryBuilder entryBuilder = builder.entryBuilder();
+
         main.addEntry(entryBuilder.startBooleanToggle("config.nocavesnoravines.caves",disableCaves)
                 .setDefaultValue(true)
                 .setSaveConsumer((newVal)->disableCaves=newVal)
