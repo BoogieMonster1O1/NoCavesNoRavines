@@ -39,20 +39,17 @@ public class Config implements ModMenuApi {
 
     private static final File configFile = new File(MinecraftClient.getInstance().runDirectory.getPath() + "." + File.separator + "config" + File.separator + "nocavesnoravines.txt");
 
-    public static boolean disableCaves = true;
-    public static boolean disableRavines = true;
-    public static boolean disableUnderwaterCaves = true;
-    public static boolean disableUnderwaterRavines = true;
-    public static boolean disableWaterLakes = true;
-    public static boolean disableLavaLakes = true;
+    public static boolean disableCaves = getBool(1);
+    public static boolean disableRavines = getBool(2);
+    public static boolean disableUnderwaterCaves = getBool(3);
+    public static boolean disableUnderwaterRavines = getBool(4);
+    public static boolean disableWaterLakes = getBool(5);
+    public static boolean disableLavaLakes = getBool(6);
 
     public Screen getScreen(Screen a){
         ConfigBuilder builder = ConfigBuilder.create().setParentScreen(MinecraftClient.getInstance().currentScreen).setTitle("config.nocavesnoravines.title").setShouldListSmoothScroll(false);
         ConfigCategory main = builder.getOrCreateCategory("config.nocavesnoravines.category");
         ConfigEntryBuilder entryBuilder = builder.entryBuilder();
-        builder.setSavingRunnable(() -> {
-
-        });
 
         main.addEntry(entryBuilder.startBooleanToggle("config.nocavesnoravines.caves",disableCaves)
                 .setDefaultValue(true)
@@ -78,6 +75,8 @@ public class Config implements ModMenuApi {
                 .setDefaultValue(true)
                 .setSaveConsumer((newVal)->disableLavaLakes=newVal)
                 .build());
+        builder.setSavingRunnable(() -> {
+        });
         return builder.build();
     }
 
