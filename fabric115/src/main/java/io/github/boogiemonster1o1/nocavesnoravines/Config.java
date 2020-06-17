@@ -26,13 +26,14 @@ public class Config implements ModMenuApi {
 
     @me.sargunvohra.mcmods.autoconfig1u.annotation.Config(name = "nocavesnoravines_config")
     public static class ModConfig implements ConfigData {
+
         public boolean disableCaves = true;
         public boolean disableRavines = true;
         public boolean disableUnderwaterCaves = true;
         public boolean disableUnderwaterRavines = true;
-        public boolean disableWaterLakes = true;
-        public boolean disableLavaLakes = true;
-        public boolean disableWaterSprings = true;
-        public boolean disableLavaSprings = true;
+        public boolean disableWaterLakes = false;
+        public boolean disableLavaLakes = false;
+        public boolean disableWaterSprings = false;
+        public boolean disableLavaSprings = false;
     }
 }
