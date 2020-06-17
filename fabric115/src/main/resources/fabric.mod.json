@@ -25,7 +25,9 @@
     "modmenu": [
       "io.github.boogiemonster1o1.nocavesnoravines.Config"
     ],
-    "client": [],
+    "client": [
+      "io.github.boogiemonster1o1.nocavesnoravines.NoCavesNoRavines"
+    ],
     "server": []
   },
   "depends": {

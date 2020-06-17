@@ -23,7 +23,7 @@ dependencies {
     mappings "net.fabricmc:yarn:1.15.2+build.17:v2"
     modImplementation "net.fabricmc:fabric-loader:0.8.7+build.201"
 
-    // Cloth Config api
+    // Cloth Config v2
     modApi "me.shedaniel.cloth:config-2:2.14.1"
     include "me.shedaniel.cloth:config-2:2.14.1"
 

@@ -1,11 +1,15 @@
 package io.github.boogiemonster1o1.nocavesnoravines;
 
-import io.github.prospector.modmenu.api.ConfigScreenFactory;
 import io.github.prospector.modmenu.api.ModMenuApi;
+import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
+import me.sargunvohra.mcmods.autoconfig1u.ConfigData;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.gui.screen.Screen;
 
-@Environment(EnvType.CLIENT)
+import java.util.Optional;
+import java.util.function.Supplier;
+
 public class Config implements ModMenuApi {
 
     @Override
@@ -13,20 +17,22 @@ public class Config implements ModMenuApi {
         return NoCavesNoRavines.MODID;
     }
 
+    @Environment(EnvType.CLIENT)
     @Override
-    public ConfigScreenFactory<?> getModConfigScreenFactory() {
-        return null;
+    public Optional<Supplier<Screen>> getConfigScreen(Screen screen) {
+        return Optional.of(AutoConfig.getConfigScreen(ModConfig.class,screen));
     }
 
+
     @me.sargunvohra.mcmods.autoconfig1u.annotation.Config(name = "nocavesnoravines_config")
-    public static class ModConfig{
-        boolean disableCaves;
-        boolean disableRavines;
-        boolean disableUnderwaterCaves;
-        boolean disableUnderwaterRavines;
-        boolean disableWaterLakes;
-        boolean disableLavaLakes;
-        boolean disableWaterSprings;
-        boolean disableLavaSprings;
+    public static class ModConfig implements ConfigData {
+        public boolean disableCaves = true;
+        public boolean disableRavines = true;
+        public boolean disableUnderwaterCaves = true;
+        public boolean disableUnderwaterRavines = true;
+        public boolean disableWaterLakes = true;
+        public boolean disableLavaLakes = true;
+        public boolean disableWaterSprings = true;
+        public boolean disableLavaSprings = true;
     }
 }
