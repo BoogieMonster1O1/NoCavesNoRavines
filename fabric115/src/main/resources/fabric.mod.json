@@ -16,11 +16,14 @@
     "issues": "https://github.com/boogieMonster1O1/NoCavesNoRavines/issues"
   },
   "license": "MIT",
-  "icon": "assets/nocavesnoravines/icon.png",
+  "icon": "assets/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
       "io.github.boogiemonster1o1.nocavesnoravines.NoCavesNoRavines"
+    ],
+    "modmenu": [
+      "io.github.boogiemonster1o1.nocavesnoravines.Config"
     ],
     "client": [],
     "server": []
