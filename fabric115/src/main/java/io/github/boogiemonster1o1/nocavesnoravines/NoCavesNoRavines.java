@@ -29,10 +29,10 @@ public class NoCavesNoRavines implements ModInitializer, ClientModInitializer {
         AutoConfig.register(Config.ModConfig.class, GsonConfigSerializer::new);
 
         LOGGER.info("Starting NoCavesNoRavines...");
-        Registry.BIOME.forEach(this::noGen);
-        RegistryEntryAddedCallback.event(Registry.BIOME).register(this::noGen);
+        Registry.BIOME.forEach(this::modifyBiomes);
+        RegistryEntryAddedCallback.event(Registry.BIOME).register(this::modifyBiomes);
     }
-    public void noGen(Biome biome){
+    public void modifyBiomes(Biome biome){
         Config.ModConfig modConfig = AutoConfig.getConfigHolder(Config.ModConfig.class).getConfig();
         if(biome.getCategory() == Biome.Category.NETHER || biome.getCategory() == Biome.Category.THEEND || biome.getCategory() == Biome.Category.NONE)
             return;
@@ -70,8 +70,8 @@ public class NoCavesNoRavines implements ModInitializer, ClientModInitializer {
             });
         }
     }
-    public void noGen(int i, Identifier identifier, Biome biome){
-        this.noGen(biome);
+    public void modifyBiomes(int i, Identifier identifier, Biome biome){
+        this.modifyBiomes(biome);
     }
 
     @Override
