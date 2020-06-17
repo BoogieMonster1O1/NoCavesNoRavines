@@ -37,7 +37,7 @@ public class Config implements ModMenuApi {
         }
     }
 
-    private static final File configFile = new File(MinecraftClient.getInstance().runDirectory.getPath() + "." + File.separator + "config" + File.separator + "nocavesnoravines.txt");
+    private static final File configFile = new File(MinecraftClient.getInstance().runDirectory.getPath() + File.separator + "config" + File.separator + "nocavesnoravines.txt");
 
     public static boolean disableCaves = getBool(1);
     public static boolean disableRavines = getBool(2);
@@ -78,6 +78,7 @@ public class Config implements ModMenuApi {
         builder.setSavingRunnable(() -> {
             try {
                 if(!configFile.exists()){
+                    System.out.println(configFile.getPath());
                     boolean created = configFile.createNewFile();
                     if(!created) throw new RuntimeException("Could not create configuration");
                 }
