@@ -17,7 +17,10 @@ import net.minecraft.world.gen.feature.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import static io.github.boogiemonster1o1.nocavesnoravines.Config.*;
+
 public class NoCavesNoRavines implements ModInitializer {
+
     public static final String MODID = "nocavesnoravines";
     public static final Logger LOGGER = LogManager.getLogger(NoCavesNoRavines.class);
     @Override
@@ -35,7 +38,7 @@ public class NoCavesNoRavines implements ModInitializer {
 
         for(GenerationStep.Carver stage : GenerationStep.Carver.values()) {
             biome.getCarversForStep(stage).removeIf(carver ->
-                    (carver.carver instanceof RavineCarver) || (carver.carver instanceof CaveCarver) || (carver.carver instanceof UnderwaterRavineCarver) || (carver.carver instanceof UnderwaterCaveCarver));
+                    (carver.carver instanceof RavineCarver) || ( carver.carver instanceof CaveCarver) || ( carver.carver instanceof UnderwaterRavineCarver) || (carver.carver instanceof UnderwaterCaveCarver));
         }
 
         for(GenerationStep.Feature stage : GenerationStep.Feature.values()) {
