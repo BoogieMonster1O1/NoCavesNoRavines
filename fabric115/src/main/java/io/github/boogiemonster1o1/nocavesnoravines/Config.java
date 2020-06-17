@@ -16,7 +16,6 @@ public class Config implements ModMenuApi {
     ConfigCategory main = builder.getOrCreateCategory("config.nocavesnoravines.category");
     ConfigEntryBuilder entryBuilder = builder.entryBuilder();
 
-
     @Override
     public String getModId() {
         return NoCavesNoRavines.MODID;
@@ -54,7 +53,7 @@ public class Config implements ModMenuApi {
                 .setDefaultValue(true)
                 .setSaveConsumer((newVal)->disableLavaLakes=newVal)
                 .build());
-        return null;
+        return builder.build();
     }
 
     @Override

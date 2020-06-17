@@ -1,4 +1,9 @@
 {
   "config.nocavesnoravines.title": "NoCavesNoRavines Config",
-  "config.nocavesnoravines.caves": "Disable Caves"
+  "config.nocavesnoravines.caves": "Disable Caves",
+  "config.nocavesnoravines.ravines": "Disable Ravines",
+  "config.nocavesnoravines.underwater_caves": "Disable Underwater Caves",
+  "config.nocavesnoravines.underwater_ravines": "Disable Underwater Ravines",
+  "config.nocavesnoravines.water_lakes": "Disable water lakes",
+  "config.nocavesnoravines.lava_lakes": "Disable lava lakes"
 }
