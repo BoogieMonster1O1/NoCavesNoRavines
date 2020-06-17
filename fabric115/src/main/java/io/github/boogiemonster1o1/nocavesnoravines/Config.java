@@ -11,8 +11,8 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -76,6 +76,21 @@ public class Config implements ModMenuApi {
                 .setSaveConsumer((newVal)->disableLavaLakes=newVal)
                 .build());
         builder.setSavingRunnable(() -> {
+            try {
+                if(!configFile.exists()){
+                    boolean created = configFile.createNewFile();
+                    if(!created) throw new RuntimeException("Could not create configuration");
+                }
+                PrintWriter writer = new PrintWriter(configFile);
+                writer.println(disableCaves);
+                writer.println(disableRavines);
+                writer.println(disableUnderwaterCaves);
+                writer.println(disableUnderwaterRavines);
+                writer.println(disableWaterLakes);
+                writer.println(disableLavaLakes);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
         return builder.build();
     }
