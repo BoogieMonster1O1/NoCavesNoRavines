@@ -10,6 +10,12 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 @Environment(EnvType.CLIENT)
 public class Config implements ModMenuApi {
 
@@ -17,6 +23,21 @@ public class Config implements ModMenuApi {
     public String getModId() {
         return NoCavesNoRavines.MODID;
     }
+
+    public static boolean getBool(int line){
+        if(configFile.exists()) return false;
+        else {
+            try {
+                boolean val = Boolean.parseBoolean(Files.readAllLines(Paths.get(configFile.getPath())).get(line));
+                return true;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+    }
+
+    private static final File configFile = new File(MinecraftClient.getInstance().runDirectory.getPath() + "." + File.separator + "config" + File.separator + "nocavesnoravines.txt");
 
     public static boolean disableCaves = true;
     public static boolean disableRavines = true;
@@ -26,9 +47,12 @@ public class Config implements ModMenuApi {
     public static boolean disableLavaLakes = true;
 
     public Screen getScreen(Screen a){
-        ConfigBuilder builder = ConfigBuilder.create().setParentScreen(MinecraftClient.getInstance().currentScreen).setTitle("config.nocavesnoravines.title");
+        ConfigBuilder builder = ConfigBuilder.create().setParentScreen(MinecraftClient.getInstance().currentScreen).setTitle("config.nocavesnoravines.title").setShouldListSmoothScroll(false);
         ConfigCategory main = builder.getOrCreateCategory("config.nocavesnoravines.category");
         ConfigEntryBuilder entryBuilder = builder.entryBuilder();
+        builder.setSavingRunnable(() -> {
+
+        });
 
         main.addEntry(entryBuilder.startBooleanToggle("config.nocavesnoravines.caves",disableCaves)
                 .setDefaultValue(true)
