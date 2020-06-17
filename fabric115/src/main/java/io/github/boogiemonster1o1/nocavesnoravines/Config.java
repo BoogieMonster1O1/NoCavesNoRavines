@@ -23,11 +23,36 @@ public class Config implements ModMenuApi {
     }
 
     public static boolean disableCaves = true;
+    public static boolean disableRavines = true;
+    public static boolean disableUnderwaterCaves = true;
+    public static boolean disableUnderwaterRavines = true;
+    public static boolean disableWaterLakes = true;
+    public static boolean disableLavaLakes = true;
 
     public Screen getScreen(Screen a){
         main.addEntry(entryBuilder.startBooleanToggle("config.nocavesnoravines.caves",disableCaves)
                 .setDefaultValue(true)
                 .setSaveConsumer((newVal)->disableCaves=newVal)
+                .build());
+        main.addEntry(entryBuilder.startBooleanToggle("config.nocavesnoravines.ravines",disableRavines)
+                .setDefaultValue(true)
+                .setSaveConsumer((newVal)->disableRavines=newVal)
+                .build());
+        main.addEntry(entryBuilder.startBooleanToggle("config.nocavesnoravines.underwater_caves",disableUnderwaterCaves)
+                .setDefaultValue(true)
+                .setSaveConsumer((newVal)->disableUnderwaterCaves=newVal)
+                .build());
+        main.addEntry(entryBuilder.startBooleanToggle("config.nocavesnoravines.underwater_ravines",disableUnderwaterRavines)
+                .setDefaultValue(true)
+                .setSaveConsumer((newVal)->disableUnderwaterRavines=newVal)
+                .build());
+        main.addEntry(entryBuilder.startBooleanToggle("config.nocavesnoravines.water_lakes",disableWaterLakes)
+                .setDefaultValue(true)
+                .setSaveConsumer((newVal)->disableWaterLakes=newVal)
+                .build());
+        main.addEntry(entryBuilder.startBooleanToggle("config.nocavesnoravines.lava_lakes",disableLavaLakes)
+                .setDefaultValue(true)
+                .setSaveConsumer((newVal)->disableLavaLakes=newVal)
                 .build());
         return null;
     }
