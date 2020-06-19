@@ -13,3 +13,4 @@ rootProject.name = 'NoCavesNoRavines'
 
 include 'forge115'
 include 'fabric115' 
+include 'forge112' 

@@ -1,0 +1,16 @@
+[
+{
+  "modid": "examplemod",
+  "name": "Example Mod",
+  "description": "Disables caves and ravines",
+  "version": "1.1.1",
+  "mcversion": "${mcversion}",
+  "url": "https://github.com/BoogieMonster1O1/NoCavesNoRavines",
+  "updateUrl": "https://github.com/BoogieMonster1O1/NoCavesNoRavines",
+  "authorList": ["Matthias Mann","BoogieMonster1O1"],
+  "credits": "The Forge and FML guys",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
