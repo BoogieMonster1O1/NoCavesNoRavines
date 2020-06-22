@@ -1,0 +1,11 @@
+{
+  "text.autoconfig.nocavesnoravines_config.title": "NoCavesNoRavines Configuration",
+  "text.autoconfig.nocavesnoravines_config.option.disableCaves": "Disable Caves",
+  "text.autoconfig.nocavesnoravines_config.option.disableRavines": "Disable Ravines",
+  "text.autoconfig.nocavesnoravines_config.option.disableUnderwaterCaves": "Disable Underwater Caves",
+  "text.autoconfig.nocavesnoravines_config.option.disableUnderwaterRavines": "Disable Underwater Ravines",
+  "text.autoconfig.nocavesnoravines_config.option.disableWaterLakes": "Disable Water Lakes",
+  "text.autoconfig.nocavesnoravines_config.option.disableLavaLakes": "Disable Lava Lakes",
+  "text.autoconfig.nocavesnoravines_config.option.disableWaterSprings": "Disable Water Springs",
+  "text.autoconfig.nocavesnoravines_config.option.disableLavaSprings": "Disable Lava Springs"
+}
