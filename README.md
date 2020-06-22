@@ -8,4 +8,3 @@ Disables caves and ravines in Minecraft
 
 #### Attribution
 Credits to [shedaniel](https://github.com/shedaniel) for making Cloth Config and Autoconfig, which is used by the Fabric version.
-Credits to [RandomLabs](https://github.com/TheRandomLabs/RandomConfigs) for making RandomConfigs, which is used by the Rift version

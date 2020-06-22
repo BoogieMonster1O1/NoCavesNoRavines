@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "io.github.boogiemonster1o1.nocavesnoravines.mixins",
+  "minVersion": "0.7.7",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "WorldCarverWrapperMixin"
+  ],
+  "client": [],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
