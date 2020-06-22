@@ -10,8 +10,7 @@ public class NoCavesNoRavines implements MinecraftStartListener, BootstrapListen
 
     public static Logger LOGGER = LogManager.getLogger();
 
-    public static final String MOD_ID = "nocooldown";
-    public static final String MOD_NAME = "No PVP Cooldown";
+    public static final String MOD_NAME = "NoCavesNoRavines";
 
 
     public static void log(Level level, String message){
