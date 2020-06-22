@@ -18,19 +18,17 @@ import org.dimdev.rift.listener.MinecraftStartListener;
 
 public class NoCavesNoRavines implements MinecraftStartListener, BootstrapListener {
 
-    public static Logger LOGGER = LogManager.getLogger();
-
     public static final String MOD_NAME = "NoCavesNoRavines";
     public static final String MOD_ID = "nocavesnoravines";
+    public static Logger LOGGER = LogManager.getLogger();
 
-
-    public static void log(Level level, String message){
-        LOGGER.log(level, "["+MOD_NAME+"] " + message);
+    public static void log(Level level, String message) {
+        LOGGER.log(level, "[" + MOD_NAME + "] " + message);
     }
 
     @Override
     public void afterVanillaBootstrap() {
-        log(Level.WARN,"This version of NoCavesNoRavines is made for Rift 1.13.2, so errors may exist. Please report them to the github issue tracker.");
+        log(Level.WARN, "This version of NoCavesNoRavines is made for Rift 1.13.2, so errors may exist. Please report them to the github issue tracker.");
 
         RegistryNamespaced.BIOME.forEach(b -> {
             if (b.getCategory() == Biome.Category.NETHER || b.getCategory() == Biome.Category.THEEND || b.getCategory() == Biome.Category.NONE)
@@ -39,14 +37,14 @@ public class NoCavesNoRavines implements MinecraftStartListener, BootstrapListen
             final IBlockState LAVA = Blocks.LAVA.getDefaultState();
             final IBlockState WATER = Blocks.WATER.getDefaultState();
 
-            for(GenerationStage.Carving stage : GenerationStage.Carving.values()) {
-                b.getCarvers(stage).removeIf(carvers -> (((FieldAccess)carvers).getField() instanceof CanyonWorldCarver) ||
-                        (((FieldAccess)carvers).getField() instanceof CaveWorldCarver) ||
-                        (((FieldAccess)carvers).getField() instanceof UnderwaterCanyonWorldCarver) ||
-                        (((FieldAccess)carvers).getField() instanceof UnderwaterCaveWorldCarver));
+            for (GenerationStage.Carving stage : GenerationStage.Carving.values()) {
+                b.getCarvers(stage).removeIf(carvers -> (((FieldAccess) carvers).getField() instanceof CanyonWorldCarver) ||
+                        (((FieldAccess) carvers).getField() instanceof CaveWorldCarver) ||
+                        (((FieldAccess) carvers).getField() instanceof UnderwaterCanyonWorldCarver) ||
+                        (((FieldAccess) carvers).getField() instanceof UnderwaterCaveWorldCarver));
             }
 
-            for(GenerationStage.Decoration stage : GenerationStage.Decoration.values()) {
+            for (GenerationStage.Decoration stage : GenerationStage.Decoration.values()) {
                 b.getFeatures(stage).removeIf(maybe_decorated -> {
                     LOGGER.debug("Found feature {} with config", ((FieldAccess) maybe_decorated).getField().getClass());
                     return ((FieldAccess) maybe_decorated).getField() instanceof LakesFeature;
@@ -61,7 +59,7 @@ public class NoCavesNoRavines implements MinecraftStartListener, BootstrapListen
         this.modifyBiomes();
     }
 
-    public void modifyBiomes(){
+    public void modifyBiomes() {
 
     }
 }

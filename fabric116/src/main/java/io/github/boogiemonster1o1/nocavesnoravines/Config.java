@@ -8,9 +8,6 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.Screen;
 
-import java.util.Optional;
-import java.util.function.Supplier;
-
 public class Config implements ModMenuApi {
 
     @Override
@@ -21,9 +18,8 @@ public class Config implements ModMenuApi {
     @Environment(EnvType.CLIENT)
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
-        return (ConfigScreenFactory<Screen>) screen -> AutoConfig.getConfigScreen(ModConfig.class,screen).get();
+        return (ConfigScreenFactory<Screen>) screen -> AutoConfig.getConfigScreen(ModConfig.class, screen).get();
     }
-
 
     @me.sargunvohra.mcmods.autoconfig1u.annotation.Config(name = "nocavesnoravines_config")
     public static class ModConfig implements ConfigData {

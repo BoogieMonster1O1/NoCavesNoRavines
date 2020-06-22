@@ -1,13 +1,13 @@
 buildscript {
-	repositories {
-		mavenCentral()
-		maven { url 'https://www.jitpack.io' }
-		maven { url 'https://files.minecraftforge.net/maven' }
-	}
-	dependencies {
-		//Change jitpack to moderniser when Forge uploads 1.13.2 MCPConfig
-		classpath 'com.github.Chocohead:ForgeGradle:jitpack-SNAPSHOT'
-	}
+    repositories {
+        mavenCentral()
+        maven { url 'https://www.jitpack.io' }
+        maven { url 'https://files.minecraftforge.net/maven' }
+    }
+    dependencies {
+        //Change jitpack to moderniser when Forge uploads 1.13.2 MCPConfig
+        classpath 'com.github.Chocohead:ForgeGradle:jitpack-SNAPSHOT'
+    }
 }
 
 apply plugin: 'net.minecraftforge.gradle.tweaker-client'
@@ -19,22 +19,22 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
-	mavenCentral()
-	maven { url 'https://www.dimdev.org/maven/' }
-	maven { url 'https://www.jitpack.io' }
+    mavenCentral()
+    maven { url 'https://www.dimdev.org/maven/' }
+    maven { url 'https://www.jitpack.io' }
 }
 
 dependencies {
-	implementation 'com.github.Chocohead:Rift:c283efe7bd:dev'
-    	implementation ('com.github.shedaniel:Rift-ModList:43d459d86f0cdbc0797c38dfc0059bda9d0db059') {
-        	transitive = false
-    	}
+    implementation 'com.github.Chocohead:Rift:c283efe7bd:dev'
+    implementation('com.github.shedaniel:Rift-ModList:43d459d86f0cdbc0797c38dfc0059bda9d0db059') {
+        transitive = false
+    }
 
 }
 
 minecraft {
-	version = '1.13.2'
-	mappings = 'snapshot_20181130'
-	runDir = 'run'
-	tweakClass = 'org.dimdev.riftloader.launch.RiftLoaderClientTweaker'
+    version = '1.13.2'
+    mappings = 'snapshot_20181130'
+    runDir = 'run'
+    tweakClass = 'org.dimdev.riftloader.launch.RiftLoaderClientTweaker'
 }

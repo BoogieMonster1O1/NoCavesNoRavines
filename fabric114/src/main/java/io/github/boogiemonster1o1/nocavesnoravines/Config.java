@@ -20,7 +20,7 @@ public class Config implements ModMenuApi {
     @Environment(EnvType.CLIENT)
     @Override
     public Optional<Supplier<Screen>> getConfigScreen(Screen screen) {
-        return Optional.of(AutoConfig.getConfigScreen(ModConfig.class,screen));
+        return Optional.of(AutoConfig.getConfigScreen(ModConfig.class, screen));
     }
 
 

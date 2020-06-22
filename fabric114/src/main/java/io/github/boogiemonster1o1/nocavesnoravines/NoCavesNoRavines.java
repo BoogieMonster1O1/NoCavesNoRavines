@@ -24,6 +24,7 @@ public class NoCavesNoRavines implements ModInitializer, ClientModInitializer {
 
     public static final String MODID = "nocavesnoravines";
     public static final Logger LOGGER = LogManager.getLogger(NoCavesNoRavines.class);
+
     @Override
     public void onInitialize() {
         AutoConfig.register(Config.ModConfig.class, GsonConfigSerializer::new);
@@ -32,36 +33,37 @@ public class NoCavesNoRavines implements ModInitializer, ClientModInitializer {
         Registry.BIOME.forEach(this::modifyBiomes);
         RegistryEntryAddedCallback.event(Registry.BIOME).register(this::modifyBiomes);
     }
-    public void modifyBiomes(Biome biome){
+
+    public void modifyBiomes(Biome biome) {
         Config.ModConfig modConfig = AutoConfig.getConfigHolder(Config.ModConfig.class).getConfig();
-        if(biome.getCategory() == Biome.Category.NETHER || biome.getCategory() == Biome.Category.THEEND || biome.getCategory() == Biome.Category.NONE)
+        if (biome.getCategory() == Biome.Category.NETHER || biome.getCategory() == Biome.Category.THEEND || biome.getCategory() == Biome.Category.NONE)
             return;
 
         final BlockState LAVA = Blocks.LAVA.getDefaultState();
         final BlockState WATER = Blocks.WATER.getDefaultState();
 
-        for(GenerationStep.Carver stage : GenerationStep.Carver.values()) {
+        for (GenerationStep.Carver stage : GenerationStep.Carver.values()) {
             biome.getCarversForStep(stage).removeIf(carver ->
-                    (modConfig.disableRavines && carver.carver instanceof RavineCarver) || (modConfig.disableCaves &&  carver.carver instanceof CaveCarver) || (modConfig.disableUnderwaterRavines &&  carver.carver instanceof UnderwaterRavineCarver) || (modConfig.disableUnderwaterCaves && carver.carver instanceof UnderwaterCaveCarver));
+                    (modConfig.disableRavines && carver.carver instanceof RavineCarver) || (modConfig.disableCaves && carver.carver instanceof CaveCarver) || (modConfig.disableUnderwaterRavines && carver.carver instanceof UnderwaterRavineCarver) || (modConfig.disableUnderwaterCaves && carver.carver instanceof UnderwaterCaveCarver));
         }
 
-        for(GenerationStep.Feature stage : GenerationStep.Feature.values()) {
+        for (GenerationStep.Feature stage : GenerationStep.Feature.values()) {
             biome.getFeaturesForStep(stage).removeIf(maybe_decorated -> {
                 ConfiguredFeature<?> feature = maybe_decorated;
-                if(feature.config instanceof DecoratedFeatureConfig) {
-                    DecoratedFeatureConfig decorated = (DecoratedFeatureConfig)feature.config;
+                if (feature.config instanceof DecoratedFeatureConfig) {
+                    DecoratedFeatureConfig decorated = (DecoratedFeatureConfig) feature.config;
                     //LOGGER.debug("Found decorated feature {} with decorator {}", decorated.feature.getClass(), decorated.decorator.getClass());
                     feature = decorated.feature;
                 }
                 LOGGER.debug("Found feature {} with config {}", feature.feature.getClass(), feature.config.getClass());
-                if(feature.feature instanceof LakeFeature && feature.config instanceof SingleStateFeatureConfig) {
-                    SingleStateFeatureConfig config = (SingleStateFeatureConfig)feature.config;
+                if (feature.feature instanceof LakeFeature && feature.config instanceof SingleStateFeatureConfig) {
+                    SingleStateFeatureConfig config = (SingleStateFeatureConfig) feature.config;
                     LOGGER.debug("Found lake with block {}", config.state.getBlock().getTranslationKey());
                     return (modConfig.disableWaterLakes && config.state == WATER) ||
                             (modConfig.disableLavaLakes && config.state == LAVA);
                 }
-                if(feature.feature instanceof SpringFeature && feature.config instanceof SpringFeatureConfig) {
-                    SpringFeatureConfig config = (SpringFeatureConfig)feature.config;
+                if (feature.feature instanceof SpringFeature && feature.config instanceof SpringFeatureConfig) {
+                    SpringFeatureConfig config = (SpringFeatureConfig) feature.config;
                     LOGGER.debug("Found spring with fluid {}", config.state.getFluid().toString());
                     return (modConfig.disableWaterSprings && config.state.getFluid().matchesType(Fluids.WATER)) ||
                             (modConfig.disableLavaSprings && config.state.getFluid().matchesType(Fluids.LAVA));
@@ -70,7 +72,8 @@ public class NoCavesNoRavines implements ModInitializer, ClientModInitializer {
             });
         }
     }
-    public void modifyBiomes(int i, Identifier identifier, Biome biome){
+
+    public void modifyBiomes(int i, Identifier identifier, Biome biome) {
         this.modifyBiomes(biome);
     }
 

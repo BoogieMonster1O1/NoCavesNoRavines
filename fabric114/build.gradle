@@ -6,7 +6,7 @@ plugins {
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
-repositories{
+repositories {
     maven {
         name = 'Fabric'
         url = 'https://maven.fabricmc.net/'
@@ -83,7 +83,7 @@ publishing {
             artifact(jar) {
                 builtBy remapJar
             }
-            artifact("${project.buildDir.absolutePath}/libs/${archivesBaseName}-${project.version}.jar"){
+            artifact("${project.buildDir.absolutePath}/libs/${archivesBaseName}-${project.version}.jar") {
                 builtBy remapJar
             }
             artifact(sourcesJar) {

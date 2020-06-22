@@ -13,12 +13,12 @@ public class MixinClass implements InitializationListener {
         Mixins.addConfiguration("nocavesnoravines.mixins.json");
         try {
             Class.forName("me.shedaniel.api.ConfigRegistry");
-            ConfigRegistry.registerConfig(NoCavesNoRavines.MOD_ID, ()->{
-                NoCavesNoRavines.log(Level.INFO,"Opening Config");
+            ConfigRegistry.registerConfig(NoCavesNoRavines.MOD_ID, () -> {
+                NoCavesNoRavines.log(Level.INFO, "Opening Config");
             });
         } catch (ClassNotFoundException e) {
-            NoCavesNoRavines.log(Level.INFO,"Modlist is not present, not registering config");
-            NoCavesNoRavines.log(Level.INFO,"You should really consider getting Modlist :)");
+            NoCavesNoRavines.log(Level.INFO, "Modlist is not present, not registering config");
+            NoCavesNoRavines.log(Level.INFO, "You should really consider getting Modlist :)");
         }
     }
 }

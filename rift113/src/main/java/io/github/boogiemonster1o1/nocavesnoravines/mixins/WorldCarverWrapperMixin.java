@@ -10,7 +10,9 @@ import org.spongepowered.asm.mixin.Shadow;
 @Mixin(WorldCarverWrapper.class)
 public class WorldCarverWrapperMixin implements FieldAccess {
 
-    @Shadow @Final private IWorldCarver<?> carver;
+    @Shadow
+    @Final
+    private IWorldCarver<?> carver;
 
     @Override
     public IWorldCarver<?> getField() {
