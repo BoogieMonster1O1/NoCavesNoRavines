@@ -9,6 +9,7 @@ import net.minecraft.world.gen.carver.CanyonWorldCarver;
 import net.minecraft.world.gen.carver.CaveWorldCarver;
 import net.minecraft.world.gen.carver.UnderwaterCanyonWorldCarver;
 import net.minecraft.world.gen.carver.UnderwaterCaveWorldCarver;
+import net.minecraft.world.gen.feature.LakesFeature;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -43,31 +44,13 @@ public class NoCavesNoRavines implements MinecraftStartListener, BootstrapListen
                         (((FieldAccess)carvers).getField() instanceof UnderwaterCanyonWorldCarver) ||
                         (((FieldAccess)carvers).getField() instanceof UnderwaterCaveWorldCarver));
             }
-            /*
+
             for(GenerationStage.Decoration stage : GenerationStage.Decoration.values()) {
                 b.getFeatures(stage).removeIf(maybe_decorated -> {
-                    CompositeFeature<?,?> feature = maybe_decorated;
-                    if(feature.config instanceof DecoratedFeatureConfig) {
-                        DecoratedFeatureConfig decorated = (DecoratedFeatureConfig)feature.config;
-                        //LOGGER.debug("Found decorated feature {} with decorator {}", decorated.feature.getClass(), decorated.decorator.getClass());
-                        feature = decorated.feature;
-                    }
-                    LOGGER.debug("Found feature {} with config {}", feature.feature.getClass(), feature.config.getClass());
-                    if(feature.feature instanceof LakesFeature && feature.config instanceof BlockStateFeatureConfig) {
-                        BlockStateFeatureConfig config = (BlockStateFeatureConfig)feature.config;
-                        LOGGER.debug("Found lake with block {}", config.state.getBlock().getTranslationKey());
-                        return (config.state == WATER) ||
-                                (config.state == LAVA);
-                    }
-                    if(((FieldAccess)feature).getField() instanceof SpringFeature && feature.config instanceof LiquidsConfig) {
-                        LiquidsConfig config = (LiquidsConfig)feature.config;
-                        LOGGER.debug("Found spring with fluid {}", config.state.getFluid().getRegistryName());
-                        return (config.state.getFluid().isEquivalentTo(Fluids.WATER)) ||
-                                (config.state.getFluid().isEquivalentTo(Fluids.LAVA));
-                    }
-                    return false;
+                    LOGGER.debug("Found feature {} with config", ((FieldAccess) maybe_decorated).getField().getClass());
+                    return ((FieldAccess) maybe_decorated).getField() instanceof LakesFeature;
                 });
-            }*/
+            }
         });
     }
 
