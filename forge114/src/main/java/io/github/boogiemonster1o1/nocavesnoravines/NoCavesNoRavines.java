@@ -29,7 +29,7 @@ public class NoCavesNoRavines {
 
     private final CommonConfiguration commonConfig;
 
-    public Main() {
+    public NoCavesNoRavines() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 
         final Pair<CommonConfiguration, ForgeConfigSpec> com = new ForgeConfigSpec.Builder().configure(builder -> new CommonConfiguration(builder));
@@ -59,14 +59,14 @@ public class NoCavesNoRavines {
 
             for (GenerationStage.Decoration stage : GenerationStage.Decoration.values()) {
                 b.getFeatures(stage).removeIf(maybe_decorated -> {
-                    ConfiguredFeature<?, ?> feature = maybe_decorated;
+                    ConfiguredFeature<?> feature = maybe_decorated;
                     if (feature.config instanceof DecoratedFeatureConfig) {
                         DecoratedFeatureConfig decorated = (DecoratedFeatureConfig) feature.config;
                         feature = decorated.feature;
                     }
                     LOGGER.debug("Found feature {} with config {}", feature.feature.getClass(), feature.config.getClass());
-                    if (feature.feature instanceof LakesFeature && feature.config instanceof BlockStateFeatureConfig) {
-                        BlockStateFeatureConfig config = (BlockStateFeatureConfig) feature.config;
+                    if (feature.feature instanceof LakesFeature && feature.config instanceof LakesConfig) {
+                        LakesConfig config = (LakesConfig) feature.config;
                         LOGGER.debug("Found lake with block {}", config.state.getBlock().getTranslationKey());
                         return (commonConfig.removeLakes.get() && config.state == WATER) ||
                                 (commonConfig.removeLavaLakes.get() && config.state == LAVA);
