@@ -28,8 +28,8 @@ dependencies {
     include "me.shedaniel.cloth:config-2:4.5.5"
 
 	// Auto config
-	modImplementation "me.sargunvohra.mcmods:autoconfig1u:3.2.0"
-	include "me.sargunvohra.mcmods:autoconfig1u:3.2.0"
+	modImplementation "me.sargunvohra.mcmods:autoconfig1u:3.2.0-unstable"
+	include "me.sargunvohra.mcmods:autoconfig1u:3.2.0-unstable"
 
 	// ModMenu
 	modImplementation "io.github.prospector:modmenu:1.12.1+build.15"
