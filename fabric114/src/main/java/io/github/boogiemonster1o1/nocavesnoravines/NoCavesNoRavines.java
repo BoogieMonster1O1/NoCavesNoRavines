@@ -56,8 +56,8 @@ public class NoCavesNoRavines implements ModInitializer, ClientModInitializer {
                     feature = decorated.feature;
                 }
                 LOGGER.debug("Found feature {} with config {}", feature.feature.getClass(), feature.config.getClass());
-                if (feature.feature instanceof LakeFeature && feature.config instanceof SingleStateFeatureConfig) {
-                    SingleStateFeatureConfig config = (SingleStateFeatureConfig) feature.config;
+                if (feature.feature instanceof LakeFeature && feature.config instanceof LakeFeatureConfig) {
+                    LakeFeatureConfig config = (LakeFeatureConfig) feature.config;
                     LOGGER.debug("Found lake with block {}", config.state.getBlock().getTranslationKey());
                     return (modConfig.disableWaterLakes && config.state == WATER) ||
                             (modConfig.disableLavaLakes && config.state == LAVA);
