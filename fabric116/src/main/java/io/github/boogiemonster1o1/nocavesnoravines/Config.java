@@ -1,5 +1,6 @@
 package io.github.boogiemonster1o1.nocavesnoravines;
 
+import io.github.prospector.modmenu.api.ConfigScreenFactory;
 import io.github.prospector.modmenu.api.ModMenuApi;
 import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
 import me.sargunvohra.mcmods.autoconfig1u.ConfigData;
@@ -19,8 +20,8 @@ public class Config implements ModMenuApi {
 
     @Environment(EnvType.CLIENT)
     @Override
-    public Optional<Supplier<Screen>> getConfigScreen(Screen screen) {
-        return Optional.of(AutoConfig.getConfigScreen(ModConfig.class,screen));
+    public ConfigScreenFactory<?> getModConfigScreenFactory() {
+        return (ConfigScreenFactory<Screen>) screen -> AutoConfig.getConfigScreen(ModConfig.class,screen).get();
     }
 
 
