@@ -6,7 +6,7 @@ import org.apache.logging.log4j.Logger;
 import org.dimdev.rift.listener.BootstrapListener;
 import org.dimdev.rift.listener.MinecraftStartListener;
 
-public class NoPVPCooldown implements MinecraftStartListener, BootstrapListener {
+public class NoCavesNoRavines implements MinecraftStartListener, BootstrapListener {
 
     public static Logger LOGGER = LogManager.getLogger();
 
