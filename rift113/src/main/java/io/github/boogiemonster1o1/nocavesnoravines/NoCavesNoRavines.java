@@ -21,6 +21,7 @@ public class NoCavesNoRavines implements MinecraftStartListener, BootstrapListen
     public static Logger LOGGER = LogManager.getLogger();
 
     public static final String MOD_NAME = "NoCavesNoRavines";
+    public static final String MOD_ID = "nocavesnoravines";
 
 
     public static void log(Level level, String message){
