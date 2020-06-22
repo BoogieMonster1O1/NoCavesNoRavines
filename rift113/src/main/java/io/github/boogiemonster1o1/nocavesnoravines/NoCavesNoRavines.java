@@ -53,6 +53,7 @@ public class NoCavesNoRavines implements MinecraftStartListener, BootstrapListen
                                 (((FieldAccess)carvers).getField() instanceof UnderwaterCaveWorldCarver));
             }
 
+            /*
             for(GenerationStage.Decoration stage : GenerationStage.Decoration.values()) {
                 b.getFeatures(stage).removeIf(maybe_decorated -> {
                     CompositeFeature<?,?> feature = maybe_decorated;
@@ -76,7 +77,7 @@ public class NoCavesNoRavines implements MinecraftStartListener, BootstrapListen
                     }
                     return false;
                 });
-            }
+            }*/
         });
     }
 }
