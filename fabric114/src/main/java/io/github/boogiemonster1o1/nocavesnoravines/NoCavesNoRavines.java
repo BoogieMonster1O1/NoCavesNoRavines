@@ -47,7 +47,7 @@ public class NoCavesNoRavines implements ModInitializer, ClientModInitializer {
 
         for(GenerationStep.Feature stage : GenerationStep.Feature.values()) {
             biome.getFeaturesForStep(stage).removeIf(maybe_decorated -> {
-                ConfiguredFeature<?,?> feature = maybe_decorated;
+                ConfiguredFeature<?> feature = maybe_decorated;
                 if(feature.config instanceof DecoratedFeatureConfig) {
                     DecoratedFeatureConfig decorated = (DecoratedFeatureConfig)feature.config;
                     //LOGGER.debug("Found decorated feature {} with decorator {}", decorated.feature.getClass(), decorated.decorator.getClass());
