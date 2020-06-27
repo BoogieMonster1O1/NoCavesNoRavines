@@ -20,13 +20,13 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "io.github.boogiemonster1o1.nocavesnoravines.NoCavesNoRavines"
+      "de.matthiasmann.nocavesnoravines.NoCavesNoRavines"
     ],
     "modmenu": [
-      "io.github.boogiemonster1o1.nocavesnoravines.Config"
+      "de.matthiasmann.nocavesnoravines.Config"
     ],
     "client": [
-      "io.github.boogiemonster1o1.nocavesnoravines.NoCavesNoRavines"
+      "de.matthiasmann.nocavesnoravines.NoCavesNoRavines"
     ],
     "server": []
   },

@@ -9,11 +9,11 @@
   ],
   "listeners": [
     {
-      "class": "io.github.boogiemonster1o1.nocavesnoravines.MixinClass",
+      "class": "de.matthiasmann.nocavesnoravines.MixinClass",
       "priority": -15
     },
     {
-      "class": "io.github.boogiemonster1o1.nocavesnoravines.NoCavesNoRavines",
+      "class": "de.matthiasmann.nocavesnoravines.NoCavesNoRavines",
       "priority": 50
     }
   ],
