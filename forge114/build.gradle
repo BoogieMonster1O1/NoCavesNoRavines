@@ -6,11 +6,12 @@ buildscript {
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath group: 'com.github.jengelman.gradle.plugins', name: 'shadow', version: '4.0.4'
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
-// Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'eclipse'
+apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'maven-publish'
 
 version = '1.0'
@@ -78,6 +79,10 @@ minecraft {
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.14.4-28.2.19'
+}
+
+repositories {
+    jcenter()
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
