@@ -67,14 +67,14 @@ public class NoCavesNoRavines {
 
             for (GenerationStage.Decoration stage : GenerationStage.Decoration.values()) {
                 b.getFeatures(stage).removeIf(maybe_decorated -> {
-                    ConfiguredFeature<?> feature = maybe_decorated;
+                    ConfiguredFeature<?,?> feature = maybe_decorated;
                     if (feature.config instanceof DecoratedFeatureConfig) {
                         DecoratedFeatureConfig decorated = (DecoratedFeatureConfig) feature.config;
                         feature = decorated.feature;
                     }
                     LOGGER.debug("Found feature {} with config {}", feature.feature.getClass(), feature.config.getClass());
-                    if (feature.feature instanceof LakesFeature && feature.config instanceof LakesConfig) {
-                        LakesConfig config = (LakesConfig) feature.config;
+                    if (feature.feature instanceof LakesFeature && feature.config instanceof BlockStateFeatureConfig) {
+                        BlockStateFeatureConfig config = (BlockStateFeatureConfig) feature.config;
                         LOGGER.debug("Found lake with block {}", config.state.getBlock().getTranslationKey());
                         return (CommonConfiguration.REMOVE_LAKES.get() && config.state == WATER) ||
                                 (CommonConfiguration.REMOVE_LAVA_LAKES.get() && config.state == LAVA);
