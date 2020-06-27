@@ -1,5 +1,5 @@
 # NoCavesNoRavines
-Disables caves and ravines in Minecraft
+Allows disabling caves and ravines in Minecraft
 
 #### Versions
 * Rift 1.13.2
