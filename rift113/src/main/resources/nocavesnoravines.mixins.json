@@ -4,8 +4,8 @@
   "minVersion": "0.7.7",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "de.matthiasmann.nocavesnoravines.mixins.CompositeFeatureMixin",
-    "de.matthiasmann.nocavesnoravines.mixins.WorldCarverWrapperMixin"
+    "CompositeFeatureMixin",
+    "WorldCarverWrapperMixin"
   ],
   "client": [],
   "server": [],
