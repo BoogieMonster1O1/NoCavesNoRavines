@@ -1,7 +1,5 @@
 package de.matthiasmann.nocavesnoravines;
 
-import com.electronwill.nightconfig.core.file.CommentedFileConfig;
-import com.electronwill.nightconfig.core.io.WritingMode;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.fluid.Fluids;
@@ -20,12 +18,10 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.io.File;
 
 import static de.matthiasmann.nocavesnoravines.NoCavesNoRavines.CommonConfiguration.COMMON;
 
@@ -35,22 +31,20 @@ public class NoCavesNoRavines {
     public static final Logger LOGGER = LogManager.getLogger(NoCavesNoRavines.class);
 
     public NoCavesNoRavines() {
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON,COMMON,"nocavesnoravines-config.toml");
-
-        CommonConfiguration.registerConfig(COMMON, FMLPaths.CONFIGDIR.get().resolve("nocavesnoravines-config.toml").toString());
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, COMMON);
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 
-        // final Pair<CommonConfiguration, ForgeConfigSpec> com = new ForgeConfigSpec.Builder().configure(builder -> new CommonConfiguration());
         MinecraftForge.EVENT_BUS.register(this);
     }
 
     private void setup(final FMLCommonSetupEvent event) {
         DeferredWorkQueue.runLater(this::modifyBiomes);
-//        this.modifyBiomes();
     }
 
     private void modifyBiomes() {
+        CommonConfiguration config = new CommonConfiguration(new ForgeConfigSpec.Builder());
+
         ForgeRegistries.BIOMES.forEach(b -> {
             if (b.getCategory() == Biome.Category.NETHER || b.getCategory() == Biome.Category.THEEND || b.getCategory() == Biome.Category.NONE)
                 return;
@@ -59,10 +53,10 @@ public class NoCavesNoRavines {
 
             for (GenerationStage.Carving stage : GenerationStage.Carving.values()) {
                 b.getCarvers(stage).removeIf(carver ->
-                        (CommonConfiguration.REMOVE_RAVINES.get() && carver.carver instanceof CanyonWorldCarver) ||
-                                (CommonConfiguration.REMOVE_CAVES.get() && carver.carver instanceof CaveWorldCarver) ||
-                                (CommonConfiguration.REMOVE_UNDERWATER_CAVES.get() && carver.carver instanceof UnderwaterCanyonWorldCarver) ||
-                                (CommonConfiguration.REMOVE_UNDERWATER_RAVINES.get() && carver.carver instanceof UnderwaterCaveWorldCarver));
+                        (config.removeRavines.get() && carver.carver instanceof CanyonWorldCarver) ||
+                                (config.removeCaves.get() && carver.carver instanceof CaveWorldCarver) ||
+                                (config.removeUnderwaterCaves.get() && carver.carver instanceof UnderwaterCanyonWorldCarver) ||
+                                (config.removeUnderwaterRavines.get() && carver.carver instanceof UnderwaterCaveWorldCarver));
             }
 
             for (GenerationStage.Decoration stage : GenerationStage.Decoration.values()) {
@@ -74,16 +68,16 @@ public class NoCavesNoRavines {
                     }
                     LOGGER.debug("Found feature {} with config {}", feature.feature.getClass(), feature.config.getClass());
                     if (feature.feature instanceof LakesFeature && feature.config instanceof LakesConfig) {
-                        LakesConfig config = (LakesConfig) feature.config;
-                        LOGGER.debug("Found lake with block {}", config.state.getBlock().getTranslationKey());
-                        return (CommonConfiguration.REMOVE_LAKES.get() && config.state == WATER) ||
-                                (CommonConfiguration.REMOVE_LAVA_LAKES.get() && config.state == LAVA);
+                        LakesConfig lakesConfig = (LakesConfig) feature.config;
+                        LOGGER.debug("Found lake with block {}", lakesConfig.state.getBlock().getTranslationKey());
+                        return (config.removeLakes.get() && lakesConfig.state == WATER) ||
+                                (config.removeLavaLakes.get() && lakesConfig.state == LAVA);
                     }
                     if (feature.feature instanceof SpringFeature && feature.config instanceof LiquidsConfig) {
-                        LiquidsConfig config = (LiquidsConfig) feature.config;
-                        LOGGER.debug("Found spring with fluid {}", config.state.getFluid().getRegistryName());
-                        return (CommonConfiguration.REMOVE_SPRINGS.get() && config.state.getFluid().isEquivalentTo(Fluids.WATER)) ||
-                                (CommonConfiguration.REMOVE_LAVA_SPRINGS.get() && config.state.getFluid().isEquivalentTo(Fluids.LAVA));
+                        LiquidsConfig liquidsConfig = (LiquidsConfig) feature.config;
+                        LOGGER.debug("Found spring with fluid {}", liquidsConfig.state.getFluid().getRegistryName());
+                        return (config.removeSprings.get() && liquidsConfig.state.getFluid().isEquivalentTo(Fluids.WATER)) ||
+                                (config.removeLavaSprings.get() && liquidsConfig.state.getFluid().isEquivalentTo(Fluids.LAVA));
                     }
                     return false;
                 });
@@ -92,47 +86,37 @@ public class NoCavesNoRavines {
     }
 
     public static class CommonConfiguration {
-        public static ForgeConfigSpec.BooleanValue REMOVE_UNDERWATER_CAVES;
-        public static ForgeConfigSpec.BooleanValue REMOVE_UNDERWATER_RAVINES;
-        public static ForgeConfigSpec.BooleanValue REMOVE_CAVES;
-        public static ForgeConfigSpec.BooleanValue REMOVE_RAVINES;
-        public static ForgeConfigSpec.BooleanValue REMOVE_LAKES;
-        public static ForgeConfigSpec.BooleanValue REMOVE_LAVA_LAKES;
-        public static ForgeConfigSpec.BooleanValue REMOVE_SPRINGS;
-        public static ForgeConfigSpec.BooleanValue REMOVE_LAVA_SPRINGS;
-        public static ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
-        public static ForgeConfigSpec COMMON = BUILDER.build();
+        public final ForgeConfigSpec.BooleanValue removeUnderwaterCaves;
+        public final ForgeConfigSpec.BooleanValue removeUnderwaterRavines;
+        public final ForgeConfigSpec.BooleanValue removeCaves;
+        public final ForgeConfigSpec.BooleanValue removeRavines;
+        public final ForgeConfigSpec.BooleanValue removeLakes;
+        public final ForgeConfigSpec.BooleanValue removeLavaLakes;
+        public final ForgeConfigSpec.BooleanValue removeSprings;
+        public final ForgeConfigSpec.BooleanValue removeLavaSprings;
 
-        static {
-            BUILDER.push("carvers");
-            REMOVE_UNDERWATER_CAVES = BUILDER.define("removeUnderwaterCaves", true);
-            REMOVE_UNDERWATER_RAVINES = BUILDER.define("removeUnderwaterRavines", true);
-            REMOVE_CAVES = BUILDER.define("removeCaves", true);
-            REMOVE_RAVINES = BUILDER.define("removeRavines", true);
-            BUILDER.pop();
+        public static final ForgeConfigSpec COMMON;
 
-            BUILDER.push("features");
-            REMOVE_LAKES = BUILDER.define("removeLakes", false);
-            REMOVE_LAVA_LAKES = BUILDER.define("removeLavaLakes", false);
-            REMOVE_SPRINGS = BUILDER.define("removeSprings", false);
-            REMOVE_LAVA_SPRINGS = BUILDER.define("removeLavaSprings", false);
-            BUILDER.pop();
+        CommonConfiguration(final ForgeConfigSpec.Builder builder) {
+            builder.push("carvers");
+            removeUnderwaterCaves = builder.define("removeUnderwaterCaves", true);
+            removeUnderwaterRavines = builder.define("removeUnderwaterRavines", true);
+            removeCaves = builder.define("removeCaves", true);
+            removeRavines = builder.define("removeRavines", true);
+            builder.pop();
+
+            builder.push("features");
+            removeLakes = builder.define("removeLakes", false);
+            removeLavaLakes = builder.define("removeLavaLakes", false);
+            removeSprings = builder.define("removeSprings", false);
+            removeLavaSprings = builder.define("removeLavaSprings", false);
+            builder.pop();
         }
 
-        public static void registerConfig(ForgeConfigSpec config, String path)
-        {
-            final CommentedFileConfig file = CommentedFileConfig.builder(new File(path)).sync().autosave().writingMode(WritingMode.REPLACE).build();
-            file.load();
-            config.setConfig(file);
+        static{
+            final Pair<CommonConfiguration, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(CommonConfiguration::new);
+            COMMON = specPair.getRight();
         }
     }
-
-    /*@Mod.EventBusSubscriber(modid=MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
-    static class NoCavesNoRavinesEventHandler{
-        @SubscribeEvent
-        public static void onModConfigEvent(final ModConfig.ModConfigEvent event) {
-            event.getConfig().ge
-        }
-    }*/
 }
 
