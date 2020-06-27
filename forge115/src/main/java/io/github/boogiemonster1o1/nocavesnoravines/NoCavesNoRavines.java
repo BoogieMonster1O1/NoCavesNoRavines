@@ -47,7 +47,6 @@ public class NoCavesNoRavines {
 
     private void setup(final FMLCommonSetupEvent event) {
         DeferredWorkQueue.runLater(this::modifyBiomes);
-//        this.modifyBiomes();
     }
 
     private void modifyBiomes() {
