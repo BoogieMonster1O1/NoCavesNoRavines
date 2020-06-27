@@ -12,6 +12,7 @@ import net.minecraft.world.gen.carver.UnderwaterCaveWorldCarver;
 import net.minecraft.world.gen.feature.*;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -23,7 +24,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import static de.matthiasmann.nocavesnoravines.NoCavesNoRavines.CommonConfiguration.COMMON;
+import static de.matthiasmann.nocavesnoravines.NoCavesNoRavines.CommonConfiguration.*;
 
 @Mod("nocavesnoravines")
 public class NoCavesNoRavines {
@@ -31,7 +32,7 @@ public class NoCavesNoRavines {
     public static final Logger LOGGER = LogManager.getLogger(NoCavesNoRavines.class);
 
     public NoCavesNoRavines() {
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, COMMON);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, COMMON_SPEC);
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 
@@ -53,10 +54,10 @@ public class NoCavesNoRavines {
 
             for (GenerationStage.Carving stage : GenerationStage.Carving.values()) {
                 b.getCarvers(stage).removeIf(carver ->
-                        (config.removeRavines.get() && carver.carver instanceof CanyonWorldCarver) ||
-                                (config.removeCaves.get() && carver.carver instanceof CaveWorldCarver) ||
-                                (config.removeUnderwaterCaves.get() && carver.carver instanceof UnderwaterCanyonWorldCarver) ||
-                                (config.removeUnderwaterRavines.get() && carver.carver instanceof UnderwaterCaveWorldCarver));
+                        (REMOVE_RAVINES && carver.carver instanceof CanyonWorldCarver) ||
+                                (REMOVE_CAVES && carver.carver instanceof CaveWorldCarver) ||
+                                (REMOVE_UNDERWATER_CAVES && carver.carver instanceof UnderwaterCanyonWorldCarver) ||
+                                (REMOVE_UNDERWATER_RAVINES && carver.carver instanceof UnderwaterCaveWorldCarver));
             }
 
             for (GenerationStage.Decoration stage : GenerationStage.Decoration.values()) {
@@ -70,14 +71,14 @@ public class NoCavesNoRavines {
                     if (feature.feature instanceof LakesFeature && feature.config instanceof LakesConfig) {
                         LakesConfig lakesConfig = (LakesConfig) feature.config;
                         LOGGER.debug("Found lake with block {}", lakesConfig.state.getBlock().getTranslationKey());
-                        return (config.removeLakes.get() && lakesConfig.state == WATER) ||
-                                (config.removeLavaLakes.get() && lakesConfig.state == LAVA);
+                        return (REMOVE_LAKES && lakesConfig.state == WATER) ||
+                                (REMOVE_LAVA_LAKES && lakesConfig.state == LAVA);
                     }
                     if (feature.feature instanceof SpringFeature && feature.config instanceof LiquidsConfig) {
                         LiquidsConfig liquidsConfig = (LiquidsConfig) feature.config;
                         LOGGER.debug("Found spring with fluid {}", liquidsConfig.state.getFluid().getRegistryName());
-                        return (config.removeSprings.get() && liquidsConfig.state.getFluid().isEquivalentTo(Fluids.WATER)) ||
-                                (config.removeLavaSprings.get() && liquidsConfig.state.getFluid().isEquivalentTo(Fluids.LAVA));
+                        return (REMOVE_SPRINGS && liquidsConfig.state.getFluid().isEquivalentTo(Fluids.WATER)) ||
+                                (REMOVE_LAVA_SPRINGS && liquidsConfig.state.getFluid().isEquivalentTo(Fluids.LAVA));
                     }
                     return false;
                 });
@@ -85,6 +86,7 @@ public class NoCavesNoRavines {
         });
     }
 
+    @Mod.EventBusSubscriber(modid = NoCavesNoRavines.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class CommonConfiguration {
         public final ForgeConfigSpec.BooleanValue removeUnderwaterCaves;
         public final ForgeConfigSpec.BooleanValue removeUnderwaterRavines;
@@ -95,7 +97,8 @@ public class NoCavesNoRavines {
         public final ForgeConfigSpec.BooleanValue removeSprings;
         public final ForgeConfigSpec.BooleanValue removeLavaSprings;
 
-        public static final ForgeConfigSpec COMMON;
+        public static final ForgeConfigSpec COMMON_SPEC;
+        public static final CommonConfiguration COMMON;
 
         CommonConfiguration(final ForgeConfigSpec.Builder builder) {
             builder.push("carvers");
@@ -115,8 +118,37 @@ public class NoCavesNoRavines {
 
         static{
             final Pair<CommonConfiguration, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(CommonConfiguration::new);
-            COMMON = specPair.getRight();
+            COMMON_SPEC = specPair.getRight();
+            COMMON = specPair.getLeft();
         }
+
+        public static boolean REMOVE_UNDERWATER_CAVES;
+        public static boolean REMOVE_UNDERWATER_RAVINES;
+        public static boolean REMOVE_CAVES;
+        public static boolean REMOVE_RAVINES;
+        public static boolean REMOVE_LAKES;
+        public static boolean REMOVE_LAVA_LAKES;
+        public static boolean REMOVE_SPRINGS;
+        public static boolean REMOVE_LAVA_SPRINGS;
+
+        public static void bakeConfig() {
+            REMOVE_UNDERWATER_CAVES = COMMON.removeUnderwaterCaves.get();
+            REMOVE_UNDERWATER_RAVINES = COMMON.removeUnderwaterRavines.get();
+            REMOVE_CAVES = COMMON.removeCaves.get();
+            REMOVE_RAVINES = COMMON.removeRavines.get();
+            REMOVE_LAKES = COMMON.removeLakes.get();
+            REMOVE_LAVA_LAKES = COMMON.removeLavaLakes.get();
+            REMOVE_SPRINGS = COMMON.removeSprings.get();
+            REMOVE_LAVA_SPRINGS = COMMON.removeLavaSprings.get();
+        }
+
+        @SubscribeEvent
+        public static void onModConfigEvent(final ModConfig.ModConfigEvent configEvent) {
+            if (configEvent.getConfig().getSpec() == CommonConfiguration.COMMON_SPEC) {
+                CommonConfiguration.bakeConfig();
+            }
+        }
+
     }
 }
 
