@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "nocavesnoravines",
+  "version": "1.1.1",
+  "name": "No Caves No Ravines",
+  "description": "Disables caves and ravines",
+  "authors": [
+    "Matthias Mann"
+  ],
+  "contributors": [
+    "BoogieMonster1O1"
+  ],
+  "contact": {
+    "homepage": "https://github.com/BoogieMonster1O1/NoCavesNoRavines",
+    "sources": "https://github.com/BoogieMonster1O1/NoCavesNoRavines",
+    "issues": "https://github.com/boogieMonster1O1/NoCavesNoRavines/issues"
+  },
+  "license": "MIT",
+  "icon": "assets/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "de.matthiasmann.nocavesnoravines.NoCavesNoRavines"
+    ]
+    "server": []
+  },
+  "depends": {
+    "fabricloader": ">=0.4.0"
+  }
+}
