@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "de.matthiasmann.nocavesnoravines.mixin",
+  "minVersion": "0.7.7",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "Class557Mixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
