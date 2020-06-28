@@ -44,8 +44,6 @@ public class NoCavesNoRavines {
     }
 
     private void modifyBiomes() {
-        CommonConfiguration config = new CommonConfiguration(new ForgeConfigSpec.Builder());
-
         ForgeRegistries.BIOMES.forEach(b -> {
             if (b.getCategory() == Biome.Category.NETHER || b.getCategory() == Biome.Category.THEEND || b.getCategory() == Biome.Category.NONE)
                 return;
