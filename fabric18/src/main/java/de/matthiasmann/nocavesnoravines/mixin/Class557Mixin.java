@@ -13,12 +13,13 @@ import java.util.Map;
 @SuppressWarnings("all")
 @Mixin(class_557.class)
 public abstract class Class557Mixin {
-    @Inject(method = "method_1509", at = @At(value="INVOKE",ordinal = 0,target = "Lnet/minecraft/class_557;method_1691(II)Lnet/minecraft/class_562;"))
+    @Inject(method = "method_1509", at = @At(value="INVOKE",ordinal = 0,target = "Lnet/minecraft/class_557;method_1691(II)Lnet/minecraft/class_562;"),cancellable = true)
     public void disableCaves(final int i, final int j){
         if(true){
             class_562 lv = this.method_1691(0, 0);
             this.field_2099.put(ColumnPos.method_198(i, j), lv);
             this.method_1687(i, j, lv);
+            return;
         }
     }
 
