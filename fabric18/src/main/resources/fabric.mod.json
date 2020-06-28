@@ -22,7 +22,6 @@
     "main": [
       "de.matthiasmann.nocavesnoravines.NoCavesNoRavines"
     ]
-    "server": []
   },
   "depends": {
     "fabricloader": ">=0.4.0"
