@@ -11,7 +11,7 @@ Allows disabling caves and ravines in Minecraft
 * Forge 1.16.1 (Complete with Config file)
 
 #### Attribution
-Credits to [shedaniel](https://github.com/shedaniel) for making Cloth Config and Autoconfig, which is used by the Fabric version.
+Credits to [shedaniel](https://github.com/shedaniel) for making Cloth Config and updating Autoconfig, which is used by the Fabric version.
 
 ### License
 NoCavesNoRavines is licensed under the MIT License
